@@ -18,6 +18,14 @@ import os
 
 
 app = dash.Dash()
+
+#adding Nasdaq list to the stock picker dropdown
+nsdq = pd.read_csv('data/NASDAQcompanylist.csv')
+nsdq.set_index('Symbol', inplace=True)
+options = []
+for tic in nsdq.index:
+    options.append({'label':'{} {}'.format(tic,nsdq.loc[tic]['Name']), 'value':tic})
+
 # Retrieving saved DATA
 
 list_of_files = glob.glob('sample_files/*.csv') # * means all if need specific format then *.csv
@@ -109,23 +117,18 @@ html.P('This report reviews the current price of the FANG (Facebook, Amazon, Net
 
 
  html.Div([
-        html.H4('Enter a stock symbol:', style={
+        html.H4('Add a stock symbol:', style={
             'position': 'relative',
             'top': '0px',
             'left': '27px',
             'font-family': 'Dosis',
-            'display': 'none',
-            'font-size': '3.0rem',
+            'display': 'inline',
+            'font-size': '2.0rem',
             'color': '#4D637F'
         }),
         dcc.Dropdown(
             id='my_ticker_symbol',
-            options=[
-                {'label': 'Facebook', 'value': 'FB'},
-                {'label': 'Alphabet Inc.', 'value': 'GOOG'},
-                {'label': 'Amazon', 'value': 'AMZN'},
-                {'label': 'Netflix', 'value': 'NFLX'}
-            ],
+            options=options,
             value=['FB', 'GOOG', 'AMZN', 'NFLX'],
             multi=True
         )
@@ -134,7 +137,7 @@ html.P('This report reviews the current price of the FANG (Facebook, Amazon, Net
         'top': '0px',
         'left': '27px',
         'font-family': 'Dosis',
-        'display': 'none',
+        'display': 'inline',
         'font-size': '2.0rem',
         'color': '#4D637F'
     }),
@@ -193,7 +196,7 @@ html.P('This report reviews the current price of the FANG (Facebook, Amazon, Net
          html.H4('Add your investment goal', style={
              'position': 'relative',
              'top': '0px',
-             'left': '27px',
+             'left': '20px',
              'font-family': 'Dosis',
              'display': 'inline',
              'font-size': '2.0rem',
@@ -205,12 +208,13 @@ html.P('This report reviews the current price of the FANG (Facebook, Amazon, Net
          type='text',
          value=1000000,
          id='goal',
-         style={'position': 'relative','left':'27px'},
+         style={'position': 'relative','left':'20px'},
 
          ),
-         html.Button('Update goal', id='button'),
+         html.Button('Update goal', id='button', style={'position': 'relative','left':'30px'}),
                     dcc.Graph(
                         id = "Goal",
+                        style={'position': 'relative'}
 
                     )
 ], className="six columns", style={'display':'inline-block',  'width':'50%'}),
