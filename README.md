@@ -24,7 +24,9 @@ Then you can start the app by running the stocktracker1.py file from the command
 4. Expose ability to add more stocks to the watch list and table. The code is currently commented out for the first part, but you'll need to add a function to populate the dropdown list with additional stocks. There's also code to add a new line to the table which would enable to user to add stocks to the table. This code is commented out. 
 
 
-Have fun!
+License
+
+The contents of this repository are covered under the MIT License.
 
 
 
